@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queens Auto Service — Instant Auto Repair Savings</title>
+    <link rel="icon" href="https://queensautoservices.com/wp-content/uploads/cropped-favicon-32x32.webp" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Initialize dataLayer for GTM
+      window.dataLayer = window.dataLayer || [];
+    </script>
+<style>
+/* Custom CSS to supplement Tailwind */
+body {
+    background-color: #0c0a09; /* A very dark gray, almost black */
+    color: #e2e8f0; /* slate-200 */
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}
+/* For the cost slider */
+#cost-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, #22d3ee 0%, #22d3ee var(--progress), #475569 var(--progress), #475569 100%);
+    border-radius: 4px;
+    outline: none;
+    transition: background 0.3s ease;
+}
+#cost-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 4px solid #22d3ee;
+    box-shadow: 0 0 5px rgba(34,211,238,0.5);
+}
+#cost-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 4px solid #22d3ee;
+    box-shadow: 0 0 5px rgba(34,211,238,0.5);
+}
+/* Bonus Card styles */
+.bonus-card .icon-wrapper {
+    background: linear-gradient(145deg, rgba(34, 211, 238, 0.1), rgba(59, 130, 246, 0.1));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #22d3ee; /* cyan-400 */
+}
+/* CTA button gradient */
+.cta-button {
+    background: linear-gradient(to right, #22d3ee, #3b82f6);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 211, 238, 0.5);
+}
+/* FAQ details/summary icon rotation */
+details[open] .faq-icon {
+    transform: rotate(180deg);
+}
+/* Form Validation Styles */
+.input-wrapper .validation-icon { display: none; }
+.input-wrapper.is-valid .icon-valid { display: block; color: #4ade80; /* green-400 */ }
+.input-wrapper.is-invalid .icon-invalid { display: block; color: #f87171; /* red-400 */ }
+.input-field.is-valid { border-color: #4ade80; }
+.input-field.is-invalid { border-color: #f87171; }
+/* Calendar styles */
+.calendar-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+.calendar-day:not(.disabled):hover { background-color: #334155; /* slate-700 */ }
+.calendar-day.today { font-weight: bold; border-color: #22d3ee; /* cyan-400 */ }
+.calendar-day.selected { background-color: #22d3ee; color: #020617; font-weight: bold; }
+.calendar-day.disabled { color: #475569; /* slate-600 */ cursor: not-allowed; text-decoration: line-through; }
+/* Time slot styles */
+.time-slot.selected { background-color: #22d3ee; border-color: #22d3ee; color: #020617; }
+/* Animated gradient border for the form */
+.animated-gradient-border {
+    position: relative;
+    border-radius: 18px;
+    padding: 4px; /* Border thickness */
+    background: linear-gradient(60deg, #3b82f6, #a78bfa, #22d3ee);
+    animation: gradient-anim 4s ease infinite;
+    background-size: 300% 300%;
+}
+@keyframes gradient-anim {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* Animation for blob backgrounds */
+@keyframes blob-anim {
+    0% { transform: scale(1) translate(0px, 0px); }
+    50% { transform: scale(1.2) translate(50px, -30px); }
+    100% { transform: scale(1) translate(0px, 0px); }
+}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- External Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    
+    <!-- Main App Script -->
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
