@@ -1,10 +1,14 @@
 
 
+
+
 import React, { useState, useEffect, useCallback, useRef, FC, ChangeEvent, FormEvent } from 'react';
 // FIX: Correct import path for TypeScript file.
 import { translations, testimonials, faqData, bonusData } from './constants';
 // FIX: Use a regular import for './types' to ensure the global JSX namespace augmentations are applied.
-import { Language, TFunction, Review, FormData, FormValidity } from './types';
+// FIX: The custom element 'wistia-player' was not recognized. Importing './types' for side effects applies the global JSX augmentations.
+import './types';
+import type { Language, TFunction, Review, FormData, FormValidity } from './types';
 
 // Reusable hook for translations
 const useTranslations = () => {
