@@ -1,18 +1,15 @@
 
 
-
-
 import React, { useState, useEffect, useCallback, useRef, FC, ChangeEvent, FormEvent } from 'react';
 // FIX: Correct import path for TypeScript file.
 import { translations, testimonials, faqData, bonusData } from './constants';
 // FIX: Use a regular import for './types' to ensure the global JSX namespace augmentations are applied.
 // FIX: The custom element 'wistia-player' was not recognized. Importing './types' for side effects applies the global JSX augmentations.
-import './types';
-import type { Language, TFunction, Review, FormData, FormValidity } from './types';
+import * as types from './types';
 
 // Reusable hook for translations
 const useTranslations = () => {
-  const [language, setLanguageState] = useState<Language>('en');
+  const [language, setLanguageState] = useState<types.Language>('en');
 
   useEffect(() => {
     const savedLang = localStorage.getItem('preferredLanguage');
@@ -21,7 +18,7 @@ const useTranslations = () => {
     }
   }, []);
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = (lang: types.Language) => {
     localStorage.setItem('preferredLanguage', lang);
     setLanguageState(lang);
     if (window.Wistia && window.Wistia.api) {
@@ -32,7 +29,7 @@ const useTranslations = () => {
     }
   };
 
-  const t: TFunction = useCallback((key: string, replacements?: {[key: string]: string}) => {
+  const t: types.TFunction = useCallback((key: string, replacements?: {[key: string]: string}) => {
     let translation = translations[language][key] || translations.en[key] || key;
     if (replacements) {
         Object.keys(replacements).forEach(rKey => {
@@ -72,7 +69,7 @@ const ScrollProgressBar: FC = () => {
     return <div className="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-cyan-400 to-purple-400 z-[60]" style={{ width: `${width}%` }} />;
 };
 
-const Header: FC<{ t: TFunction, language: Language, setLanguage: (lang: Language) => void, showNav: boolean }> = ({ t, language, setLanguage, showNav }) => {
+const Header: FC<{ t: types.TFunction, language: types.Language, setLanguage: (lang: types.Language) => void, showNav: boolean }> = ({ t, language, setLanguage, showNav }) => {
     const headerRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -138,7 +135,7 @@ const LandingPage: FC = () => {
         const anchor = target.closest('a[href^="#"]');
         if (anchor) {
           const href = anchor.getAttribute('href');
-          if (href === '#' || href?.startsWith('#disclaimer-modal')) return;
+          if (!href || href === '#' || href.startsWith('#disclaimer-modal')) return;
           e.preventDefault();
           const targetEl = document.querySelector(href);
           if (targetEl) {
@@ -384,7 +381,7 @@ const ThankYouPage: FC = () => {
     );
 };
 
-const HeroSection: FC<{ t: TFunction, language: Language }> = ({ t, language }) => (
+const HeroSection: FC<{ t: types.TFunction, language: types.Language }> = ({ t, language }) => (
     <section id="hero-section" className="relative text-center pt-28 pb-20 sm:pt-24 sm:pb-20 px-4">
         <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}><span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Save Up to $100</span> on Your Next Auto Repair</h1>
@@ -408,7 +405,7 @@ const HeroSection: FC<{ t: TFunction, language: Language }> = ({ t, language }) 
     </section>
 );
 
-const ScaleSection: FC<{t: TFunction, onDetailsClick: () => void}> = ({ t, onDetailsClick }) => {
+const ScaleSection: FC<{t: types.TFunction, onDetailsClick: () => void}> = ({ t, onDetailsClick }) => {
     const [cost, setCost] = useState(450);
     
     const calculateSavings = (c: number) => {
@@ -460,7 +457,7 @@ const ScaleSection: FC<{t: TFunction, onDetailsClick: () => void}> = ({ t, onDet
     );
 };
 
-const CouponSection: FC<{ t: TFunction }> = ({ t }) => (
+const CouponSection: FC<{ t: types.TFunction }> = ({ t }) => (
     <section className="py-24 px-4 bg-black-950/50 border-y border-slate-800">
         <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-white mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t('couponTitle')}</h2>
@@ -474,7 +471,7 @@ const CouponSection: FC<{ t: TFunction }> = ({ t }) => (
     </section>
 );
 
-const BonusSection: FC<{ t: TFunction }> = ({ t }) => (
+const BonusSection: FC<{ t: types.TFunction }> = ({ t }) => (
     <section className="py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl lg:text-5xl font-extrabold text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}><span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">{t('bonusStackTitle')}</span></h2>
@@ -495,7 +492,7 @@ const BonusSection: FC<{ t: TFunction }> = ({ t }) => (
     </section>
 );
 
-const HowItWorksSection: FC<{ t: TFunction }> = ({ t }) => (
+const HowItWorksSection: FC<{ t: types.TFunction }> = ({ t }) => (
     <section id="how-it-works" className="py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-4xl font-extrabold text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>How It Works — In 3 Easy Steps</h2>
@@ -508,7 +505,7 @@ const HowItWorksSection: FC<{ t: TFunction }> = ({ t }) => (
     </section>
 );
 
-const TestimonialsSection: FC<{ t: TFunction }> = ({ t }) => {
+const TestimonialsSection: FC<{ t: types.TFunction }> = ({ t }) => {
     const [visibleCount, setVisibleCount] = useState(6);
     const [expanded, setExpanded] = useState<Record<number, boolean>>({});
 
@@ -558,7 +555,7 @@ const TestimonialsSection: FC<{ t: TFunction }> = ({ t }) => {
     );
 };
 
-const AboutSection: FC<{ t: TFunction }> = ({ t }) => (
+const AboutSection: FC<{ t: types.TFunction }> = ({ t }) => (
     <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 items-center gap-8 md:gap-12">
@@ -579,7 +576,7 @@ const AboutSection: FC<{ t: TFunction }> = ({ t }) => (
     </section>
 );
 
-const FAQSection: FC<{ t: TFunction }> = ({ t }) => (
+const FAQSection: FC<{ t: types.TFunction }> = ({ t }) => (
     <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl lg:text-4xl font-bold text-center text-white mb-10" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t('faqTitle')}</h2>
@@ -598,7 +595,7 @@ const FAQSection: FC<{ t: TFunction }> = ({ t }) => (
     </section>
 );
 
-const ServiceAreaSection: FC<{ t: TFunction }> = ({ t }) => (
+const ServiceAreaSection: FC<{ t: types.TFunction }> = ({ t }) => (
     <section className="py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-4xl font-extrabold text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t('serviceAreaTitle')}</h2>
@@ -609,7 +606,7 @@ const ServiceAreaSection: FC<{ t: TFunction }> = ({ t }) => (
     </section>
 );
 
-const StickyCTA: FC<{ t: TFunction }> = ({ t }) => {
+const StickyCTA: FC<{ t: types.TFunction }> = ({ t }) => {
     const ctaRef = useRef<HTMLAnchorElement>(null);
     useEffect(() => {
         const sectionsToObserve = [
@@ -649,7 +646,7 @@ const StickyCTA: FC<{ t: TFunction }> = ({ t }) => {
     );
 };
 
-const Footer: FC<{ t: TFunction }> = ({ t }) => (
+const Footer: FC<{ t: types.TFunction }> = ({ t }) => (
     <footer className="mt-20 py-10 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 text-center text-sm text-slate-400">
             <p>&copy; {new Date().getFullYear()} Queens Auto Service. All Rights Reserved. | <a href="https://queensautoservices.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('privacyPolicy')}</a> | <a href="https://queensautoservices.com/terms-of-service/" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('termsOfUse')}</a></p>
@@ -658,7 +655,7 @@ const Footer: FC<{ t: TFunction }> = ({ t }) => (
     </footer>
 );
 
-const DisclaimerModal: FC<{ t: TFunction, isOpen: boolean, onClose: () => void }> = ({ t, isOpen, onClose }) => {
+const DisclaimerModal: FC<{ t: types.TFunction, isOpen: boolean, onClose: () => void }> = ({ t, isOpen, onClose }) => {
     if (!isOpen) return null;
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 transition-opacity duration-300 opacity-100" onClick={onClose}>
@@ -673,7 +670,7 @@ const DisclaimerModal: FC<{ t: TFunction, isOpen: boolean, onClose: () => void }
     );
 };
 
-const ExitIntentPopup: FC<{ t: TFunction, isOpen: boolean, onClose: () => void }> = ({ t, isOpen, onClose }) => {
+const ExitIntentPopup: FC<{ t: types.TFunction, isOpen: boolean, onClose: () => void }> = ({ t, isOpen, onClose }) => {
     if (!isOpen) return null;
     
     const handleCTAClick = () => {
@@ -716,7 +713,7 @@ const InputField: FC<{ name: string, label: string, value: string, onChange: (e:
     );
 };
 
-const Calendar: FC<{ t: TFunction, currentDate: Date, onDateChange: (date: Date) => void, selectedDate: string, onDateSelect: (date: string) => void }> = ({ t, currentDate, onDateChange, selectedDate, onDateSelect }) => {
+const Calendar: FC<{ t: types.TFunction, currentDate: Date, onDateChange: (date: Date) => void, selectedDate: string, onDateSelect: (date: string) => void }> = ({ t, currentDate, onDateChange, selectedDate, onDateSelect }) => {
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
     const today = new Date();
@@ -791,7 +788,7 @@ const Calendar: FC<{ t: TFunction, currentDate: Date, onDateChange: (date: Date)
     );
 };
 
-const TimeSlots: FC<{ t: TFunction, selectedDate: string, selectedTime: string, onTimeSelect: (time: string) => void }> = ({ t, selectedDate, selectedTime, onTimeSelect }) => {
+const TimeSlots: FC<{ t: types.TFunction, selectedDate: string, selectedTime: string, onTimeSelect: (time: string) => void }> = ({ t, selectedDate, selectedTime, onTimeSelect }) => {
     const availableTimes: string[] = [];
     const now = new Date();
     const selected = new Date(`${selectedDate}T00:00:00`);
@@ -856,14 +853,14 @@ const TimeSlots: FC<{ t: TFunction, selectedDate: string, selectedTime: string, 
 };
 
 // Booking Form Component with all logic
-const BookingForm: FC<{t: TFunction}> = ({ t }) => {
+const BookingForm: FC<{t: types.TFunction}> = ({ t }) => {
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<types.FormData>({
         'first-name': '', 'last-name': '', email: '', 'mobile-number': '',
         'vehicle-year': '', 'vehicle-make': '', 'vehicle-model': '',
         date: '', time: ''
     });
-    const [validity, setValidity] = useState<FormValidity>({
+    const [validity, setValidity] = useState<types.FormValidity>({
         'first-name': null, 'last-name': null, email: null, 'mobile-number': null,
         'vehicle-make': null, 'vehicle-model': null
     });
@@ -973,7 +970,7 @@ const BookingForm: FC<{t: TFunction}> = ({ t }) => {
         }
     };
     
-    const isStep1Valid = Object.keys(validationRules).every(key => validity[key as keyof FormValidity] === true) && formData['vehicle-year'] !== '';
+    const isStep1Valid = Object.keys(validationRules).every(key => validity[key as keyof types.FormValidity] === true) && formData['vehicle-year'] !== '';
     const isStep2Valid = formData.date !== '' && formData.time !== '';
 
     const smoothScrollToForm = () => {
