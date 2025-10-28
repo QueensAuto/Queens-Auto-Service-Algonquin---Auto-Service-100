@@ -1,8 +1,8 @@
-// FIX: Changed 'import * as React' back to 'import type * as React'.
-// The previous "fix" of using a regular import seems to have caused issues by overriding the global 
-// JSX namespace instead of augmenting it. Using 'import type' ensures this file only provides 
-// type information and allows the .tsx files to correctly load the base JSX definitions.
-import type * as React from 'react';
+// FIX: Changed 'import type * as React' to 'import * as React'.
+// Using a type-only import was preventing React's global JSX namespace from being loaded,
+// causing TypeScript to think standard HTML elements were not valid JSX.
+// A regular import ensures the base JSX definitions are loaded before our augmentation.
+import * as React from 'react';
 
 // FIX: Add global declarations for custom elements and window properties to be available across the project.
 declare global {
