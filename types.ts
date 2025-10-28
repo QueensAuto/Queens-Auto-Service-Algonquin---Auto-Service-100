@@ -1,10 +1,14 @@
-// FIX: Import React to use its types for augmenting the global JSX namespace.
-import React from 'react';
+// FIX: Changed 'import * as React' back to 'import type * as React'.
+// The previous "fix" of using a regular import seems to have caused issues by overriding the global 
+// JSX namespace instead of augmenting it. Using 'import type' ensures this file only provides 
+// type information and allows the .tsx files to correctly load the base JSX definitions.
+import type * as React from 'react';
 
 // FIX: Add global declarations for custom elements and window properties to be available across the project.
 declare global {
   namespace JSX {
     interface IntrinsicElements {
+      // FIX: Add wistia-player type definition for custom element.
       'wistia-player': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
         'media-id'?: string;
         aspect?: string;

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './types';
 // FIX: Correct import path for TypeScript file.
 import App from './app';
+// import './index.css'; // Temporarily disabled for CDN usage
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

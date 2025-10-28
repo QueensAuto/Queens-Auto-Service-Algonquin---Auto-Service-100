@@ -1,12 +1,13 @@
 
 
-
 import React, { useState, useEffect, useCallback, useRef, FC, ChangeEvent, FormEvent } from 'react';
 // FIX: Correct import path for TypeScript file.
 import { translations, testimonials, faqData, bonusData } from './constants';
 // FIX: The custom element 'wistia-player' was not recognized. Importing './types' for side effects applies the global JSX augmentations.
 import './types';
 import type { Language, TFunction, FormData, FormValidity } from './types';
+
+// FIX: Removed duplicate 'wistia-player' type declaration. The global definition is now in types.ts.
 
 // Reusable hook for translations
 const useTranslations = () => {
@@ -23,8 +24,8 @@ const useTranslations = () => {
     localStorage.setItem('preferredLanguage', lang);
     setLanguageState(lang);
     if (window.Wistia && window.Wistia.api) {
-        const enVideo = window.Wistia.api('a6i5ic59jv');
-        const esVideo = window.Wistia.api('u9od4mapw5');
+        const enVideo = window.Wistia.api('dpxrr6otfn');
+        const esVideo = window.Wistia.api('7759m49oox');
         if (lang === 'es' && enVideo) enVideo.pause();
         if (lang === 'en' && esVideo) esVideo.pause();
     }
@@ -391,10 +392,24 @@ const HeroSection: FC<{ t: TFunction, language: Language }> = ({ t, language }) 
 
             <div className="mt-12 max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border-2 border-slate-800">
                 <div className={language === 'en' ? '' : 'hidden'}>
-                    <wistia-player media-id="a6i5ic59jv" aspect="1.7777777777777777"></wistia-player>
+                    <wistia-player media-id="dpxrr6otfn" aspect="1.7777777777777777">
+                        <div className="wistia_preload_transcript_outer_wrapper" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-56.25%' }}>
+                            <div className="wistia_preload_transcript_inner_wrapper" style={{ overflow: 'auto' }}>
+                                <p className="wistia_preload_transcript_text" aria-hidden="true" tabIndex={-1} style={{ textAlign: 'justify', fontSize: '5px' }}>
+                                    Hey Algonquin drivers, let's be real. Times are tough across the country. There's been no relief as food costs keep rising and you know prices just keep going up. And if you were the one keeping the family going, working hard, paying bills, stretching every dollar, trying to make it to the end of the month, the last thing you want is a car that starts acting up. Brakes wheeling, weird vibrations, that check engine light you're hoping to ignore, but you know it's not fixing itself. But here's the thing, if you let it slide, it turns into a breakdown. Stuck on the side of the road, late for work, kids missing school, stress just piles on. That's the last thing you need right now. At Queen's Auto, we understand. We shop where you do get gas at the same stations and feel the same pressures. Let us help. Simply scroll down this page, book an appointment, and grab a coupon code to save up to one hundred dollars on repairs. Wondering how much? Check the price scale on this page. Every fix comes with a twenty four month, twenty four thousand mile guarantee, a multipoint inspection, and topped off fluids because a reliable car matters more than ever. We've got your back in these tough times, friend. Book an appointment today and get your discount code instantly. No strings attached.
+                                </p>
+                            </div>
+                        </div>
+                    </wistia-player>
                 </div>
                 <div className={language === 'es' ? '' : 'hidden'}>
-                    <wistia-player media-id="u9od4mapw5" aspect="1.7777777777777777"></wistia-player>
+                    <wistia-player media-id="7759m49oox" aspect="1.7777777777777777">
+                        <div className="wistia_preload_transcript_outer_wrapper" style={{width: '100%', height: '100%', display:'flex', justifyContent:'center', alignItems: 'center', marginTop:'-56.25%'}}>
+                            <div className="wistia_preload_transcript_inner_wrapper" style={{ overflow: 'auto'}}>
+                                <p className="wistia_preload_transcript_text" aria-hidden="true" tabIndex={-1} style={{textAlign: 'justify', fontSize: '5px'}}>Hola, conductores de Alconkin. Vamos a ser honestos, los tiempos están duros y todos sabemos que los precios no paran de subir. Y si eres quien mantiene la familia trabajando duro, pagando bills y estirando cada dólar para llegar a fin de mes, lo último que quieres es un coche que empiece a fallar, frenos que rechinan, vibraciones extrañas, esa luz de check engine que esperas ignorar, pero sabes que no se va a arreglar solo. Pero aquí está el problema, si lo dejas pasar termina en una avería, quedarte varado en la carretera, llegar tarde al trabajo, los niños faltando a la escuela, el estrés se acumula, eso es lo último que necesitas ahora. En Queens Auto lo entendemos, compramos donde tú compras, llenamos el tanque en las mismas gasolineras y sentimos las mismas presiones. Déjanos ayudarte, solo baja por esta página, reserva una cita y obtén un código de cupón para ahorrar hasta cien dólares en reparaciones. ¿Curioso por cuánto puedes ahorrar? Revisa la escala de precios en esta página. Cada reparación incluye una garantía de meses y veinticuatro mil millas, una inspección en múltiples puntos y fluidos rellenados, porque un coche confiable es más importante que nunca. Estamos contigo en estos tiempos difíciles. Agenda tu cita ya, te esperamos.</p>
+                            </div>
+                        </div>
+                    </wistia-player>
                 </div>
             </div>
 
